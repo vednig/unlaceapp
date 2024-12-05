@@ -1,101 +1,92 @@
-import Image from "next/image";
-
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+import { Thread } from '@/components/thread'
+import { ThreadForm } from '@/components/thread-form'
+import { Metadata } from 'next'
+import { TweetButton } from '@/components/tweet-button'
+import { ErrorBoundary } from '@/components/error-boundary'
+import Link from 'next/link'
+interface Props {
+  searchParams: { url?: string }
 }
+
+async function getData(url: string) {
+  const apiUrl = `https://tables-tribute-society-dsc.trycloudflare.com/x-thread-api?url=${encodeURIComponent(url)}`
+  const res = await fetch(apiUrl, { next: { revalidate: 3600 } }) // Cache for 1 hour
+  
+  if (!res.ok) {
+    throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`)
+  }
+ 
+  return res.json()
+}
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  if (!searchParams.url) {
+    return {
+      title: 'Thread Viewer',
+      description: 'View X (Twitter) threads in a clean format'
+    }
+  }
+
+  try {
+    const data = await getData(searchParams.url)
+    const firstTweet = data[0]
+    const title = `${firstTweet.author}: ${firstTweet.text.slice(0, 50)}...`
+
+    return {
+      title,
+      description: firstTweet.text.slice(0, 160),
+      openGraph: {
+        title,
+        description: firstTweet.text.slice(0, 160),
+        images: [firstTweet.media[1] || firstTweet.media[0]],
+      },
+    }
+  } catch (error) {
+    console.error('Error generating metadata:', error)
+    return {
+      title: 'Thread Viewer - Error',
+      description: 'An error occurred while fetching the thread data.',
+    }
+  }
+}
+
+export default async function Page({ searchParams }: Props) {
+  if (!searchParams.url) {
+    return <ThreadForm />
+  }
+
+  try {
+    const data = await getData(searchParams.url)
+    const pageTitle = `${data[0].author}: ${data[0].text.slice(0, 50)}...`
+
+    return (
+      <div className="min-h-screen bg-black">
+        <main className="container mx-auto px-4 py-8">
+          <ErrorBoundary fallback={<ErrorMessage />}>
+            <h1 className="text-2xl font-bold mb-4 text-white">{pageTitle}</h1>
+            <Thread tweets={data} />
+            <div className="mt-8">
+              <TweetButton url={searchParams.url} title={pageTitle} />
+            </div>
+          </ErrorBoundary>
+        </main>
+      </div>
+    )
+  } catch (error) {
+    console.error('Error fetching thread data:', error)
+    return <ErrorMessage />
+  }
+}
+
+function ErrorMessage() {
+  return (
+    <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-2xl font-bold mb-4">Error</h1>
+        <p>An error occurred while fetching the thread data. Please try again later.</p>
+        <Link href="/" className="text-blue-400 hover:underline mt-4 inline-block">Go back to home</Link>
+      </div>
+    </div>
+  )
+}
+

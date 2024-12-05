@@ -6,7 +6,7 @@ import { ErrorBoundary } from '@/components/error-boundary'
 import Link from 'next/link'
 
 interface Props {
-  searchParams: { url?: string }
+  searchParams: Promise<{ url?: string }>
 }
 
 async function getData(url: string) {
@@ -20,7 +20,8 @@ async function getData(url: string) {
   return res.json()
 }
 
-export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   if (!searchParams.url) {
     return {
       title: 'Thread Viewer',
@@ -51,7 +52,8 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   }
 }
 
-export default async function Page({ searchParams }: Props) {
+export default async function Page(props: Props) {
+  const searchParams = await props.searchParams;
   if (!searchParams.url) {
     return <ThreadForm />
   }

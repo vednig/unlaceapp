@@ -12,7 +12,8 @@ async function getData(url: string) {
   return res.json()
 }
 
-export async function generateMetadata({ params }: { params: { url: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ url: string }> }): Promise<Metadata> {
+  const params = await props.params;
   const decodedUrl = decodeURIComponent(params.url)
   const data = await getData(`https://x.com/${decodedUrl}`)
   const firstTweet = data[0]
@@ -28,7 +29,8 @@ export async function generateMetadata({ params }: { params: { url: string } }):
   }
 }
 
-export default async function Page({ params }: { params: { url: string } }) {
+export default async function Page(props: { params: Promise<{ url: string }> }) {
+  const params = await props.params;
   const decodedUrl = decodeURIComponent(params.url)
   const data = await getData(`https://x.com/${decodedUrl}`)
 

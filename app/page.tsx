@@ -4,12 +4,13 @@ import { Metadata } from 'next'
 import { TweetButton } from '@/components/tweet-button'
 import { ErrorBoundary } from '@/components/error-boundary'
 import Link from 'next/link'
+
 interface Props {
   searchParams: { url?: string }
 }
 
 async function getData(url: string) {
-  const apiUrl = `https://tables-tribute-society-dsc.trycloudflare.com/x-thread-api?url=${encodeURIComponent(url)}`
+  const apiUrl = `https://xapi.betaco.tech/x-thread-api?url=${encodeURIComponent(url)}`
   const res = await fetch(apiUrl, { next: { revalidate: 3600 } }) // Cache for 1 hour
   
   if (!res.ok) {

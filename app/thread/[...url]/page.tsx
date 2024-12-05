@@ -2,7 +2,7 @@ import { Thread } from '@/components/new-threads'
 import { Metadata } from 'next'
 
 async function getData(url: string) {
-  const apiUrl = `https://tables-tribute-society-dsc.trycloudflare.com/x-thread-api?url=${encodeURIComponent(url.replaceAll(',','/'))}`
+  const apiUrl = `https://xapi.betaco.tech/x-thread-api?url=${encodeURIComponent(url.replaceAll(',','/'))}`
   const res = await fetch(apiUrl, { next: { revalidate: 3600 } }) // Cache for 1 hour
   console.log(url.replaceAll(',','/'))
   if (!res.ok) {

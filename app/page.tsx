@@ -82,7 +82,9 @@ export default function Home() {
           </div>
         </div>
         {loading ? (
-          <div className="text-white text-center">Loading thread data...</div>
+          <div className="text-white text-center">Loading thread data...<br/><span className='text-gray-400 animate-pulse'> Might take some time</span>{
+           
+          }</div>
         ) : error ? (
           <div className="text-red-500 text-center">{error}</div>
         ) : tweets.length > 0 ? (

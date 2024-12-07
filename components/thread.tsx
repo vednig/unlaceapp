@@ -112,6 +112,10 @@ export function Thread({ tweets, url }: ThreadProps) {
       <header className="p-4 border-b border-gray-800">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
+            <a 
+            target='no_follow'
+            href={"https://x.com/"+firstTweet.author.toLowerCase().replace(/\s/g, '')}
+            >
             <Image
               src={firstTweet.media[0]}
               alt={firstTweet.author}
@@ -123,6 +127,7 @@ export function Thread({ tweets, url }: ThreadProps) {
               <h2 className="font-bold text-xl">{firstTweet.author}</h2>
               <p className="text-gray-500">@{firstTweet.author.toLowerCase().replace(/\s/g, '')}</p>
             </div>
+            </a>
           </div>
           <button
             onClick={handleSaveThread}

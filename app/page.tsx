@@ -49,7 +49,8 @@ export default function Home() {
         <Suspense>
         <main className="container mx-auto px-4 py-8">
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">Thread Viewer</h1>
+            <Link href="/">
+            <h1 className="text-3xl font-bold">Thread Viewer</h1></Link>
             <div className="space-x-4">
               <Link href="/my-comments" className="text-blue-400 hover:underline">
                 My Comments

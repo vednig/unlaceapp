@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server'
-import sampleData from './sample-data.json'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -11,6 +10,6 @@ export async function GET(request: Request) {
 
   // In a real-world scenario, you would fetch the data based on the URL
   // For this example, we'll always return the sample data
-  return NextResponse.json(sampleData)
+  return NextResponse.json({})
 }
 

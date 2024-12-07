@@ -44,7 +44,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     console.error('Error generating metadata:', error)
     return {
       title: 'Thread Viewer - Error',
-      description: 'An error occurred while fetching the thread data.',
+      description: 'An error occurred while fetching the thread data. Please refresh the page in a while',
     }
   }
 }
@@ -81,7 +81,7 @@ function ErrorMessage() {
     <div className="min-h-screen bg-black text-white flex items-center justify-center">
       <div className="text-center">
         <h1 className="text-2xl font-bold mb-4">Error</h1>
-        <p>An error occurred while fetching the thread data. Please try again later.</p>
+        <p>An error occurred while fetching the thread data. Please refresh the page in a while.</p>
         <a href="/" className="text-blue-400 hover:underline mt-4 inline-block">Go back to home</a>
       </div>
     </div>

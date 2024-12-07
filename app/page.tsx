@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Thread } from '@/components/thread'
 import { ThreadForm } from '@/components/thread-form'
@@ -66,6 +66,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black">
+      <Suspense>
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-white">Thread Viewer</h1>
@@ -91,6 +92,7 @@ export default function Home() {
           </>
         ) : null}
       </main>
+      </Suspense>
     </div>
   )
 }

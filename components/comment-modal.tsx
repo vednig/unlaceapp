@@ -5,9 +5,10 @@ interface CommentModalProps {
   onClose: () => void
   onSave: (comment: string) => void
   initialComment: string
+  isEditing?: boolean
 }
 
-export function CommentModal({ isOpen, onClose, onSave, initialComment }: CommentModalProps) {
+export function CommentModal({ isOpen, onClose, onSave, initialComment, isEditing }: CommentModalProps) {
   const [comment, setComment] = useState(initialComment)
 
   useEffect(() => {
@@ -19,7 +20,7 @@ export function CommentModal({ isOpen, onClose, onSave, initialComment }: Commen
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-gray-800 p-6 rounded-lg w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4 text-white">Add Comment</h2>
+        <h2 className="text-xl font-bold mb-4 text-white">{isEditing ? 'Edit Comment' : 'Add Comment'}</h2>
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
@@ -40,7 +41,7 @@ export function CommentModal({ isOpen, onClose, onSave, initialComment }: Commen
             }}
             className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-md hover:bg-blue-700"
           >
-            Save
+            {isEditing ? 'Update' : 'Save'}
           </button>
         </div>
       </div>

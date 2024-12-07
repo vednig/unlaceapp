@@ -18,6 +18,7 @@ export default function RootLayout({
         {children}
       </body>
       <Analytics/>
+
     </html>
   )
 }

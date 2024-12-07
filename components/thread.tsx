@@ -5,17 +5,17 @@ import Image from 'next/image'
 // import { VideoPlayer } from './video-player'
 import { Tweet } from '@/types/tweet'
 import { CommentModal } from './comment-modal'
+import { Edit2 } from 'lucide-react'
+import 'video.js/dist/video-js.css'
 
-// function hasEmoji(str: string): boolean {
-//   // const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u
-//   // return emojiRegex.test(str)
+// function hasEmojiInPath(str: string): boolean {
 //   return str.toLowerCase().includes('emoji')
-
 // }
 
-function replaceLinks(text: string, links: string[]): JSX.Element[] {
+function replaceLinksWithTcoLinks(text: string, links: string[]): JSX.Element[] {
   const urlRegex = /(https?:\/\/[^\s]+)/g
   const parts = text.split(urlRegex)
+  
   let linkcount=0
   return parts.map((part, index) => {
     if (part.match(urlRegex)) {
@@ -33,38 +33,71 @@ function replaceLinks(text: string, links: string[]): JSX.Element[] {
           </a>
         )
     }
-    
-
     return <span key={index}>{part}</span>
   })
 }
 
+interface ThreadProps {
+  tweets: Tweet[]
+  url: string
+}
 
-export function Thread({ tweets }: { tweets: Tweet[] }) {
+export function Thread({ tweets, url }: ThreadProps) {
   const [comments, setComments] = useState<Record<string, string>>({})
   const [selectedText, setSelectedText] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentTweetId, setCurrentTweetId] = useState<string | null>(null)
+  const [isSaved, setIsSaved] = useState(false)
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null)
 
   useEffect(() => {
     const storedComments = localStorage.getItem('threadComments')
     if (storedComments) {
-      setComments(JSON.parse(storedComments))
+      const parsedComments = JSON.parse(storedComments)
+      const threadComments = parsedComments[url] || {}
+      setComments(threadComments)
     }
-  }, [])
+
+    const savedThreads = JSON.parse(localStorage.getItem('savedThreads') || '[]')
+    setIsSaved(savedThreads.some((thread: { url: string }) => thread.url === url))
+  }, [url])
 
   const handleCommentChange = (tweetId: string, comment: string) => {
     const newComments = { ...comments, [tweetId]: comment }
     setComments(newComments)
-    localStorage.setItem('threadComments', JSON.stringify(newComments))
+    
+    const storedComments = JSON.parse(localStorage.getItem('threadComments') || '{}')
+    storedComments[url] = newComments
+    localStorage.setItem('threadComments', JSON.stringify(storedComments))
   }
 
   const handleTextSelection = (event: MouseEvent, tweetId: string) => {
+    if (comments[tweetId]) return // Prevent commenting on tweets with existing comments
+
     const selection = window.getSelection()
     if (selection && selection.toString().trim().length > 0) {
       setSelectedText(selection.toString())
       setCurrentTweetId(tweetId)
       setIsModalOpen(true)
+    }
+  }
+
+  const handleEditComment = (tweetId: string) => {
+    setEditingCommentId(tweetId)
+    setCurrentTweetId(tweetId)
+    setIsModalOpen(true)
+  }
+
+  const handleSaveThread = () => {
+    const savedThreads = JSON.parse(localStorage.getItem('savedThreads') || '[]')
+    if (!isSaved) {
+      savedThreads.push({ url, title: tweets[0].text.slice(0, 50) + '...' })
+      localStorage.setItem('savedThreads', JSON.stringify(savedThreads))
+      setIsSaved(true)
+    } else {
+      const updatedThreads = savedThreads.filter((thread: { url: string }) => thread.url !== url)
+      localStorage.setItem('savedThreads', JSON.stringify(updatedThreads))
+      setIsSaved(false)
     }
   }
 
@@ -77,18 +110,28 @@ export function Thread({ tweets }: { tweets: Tweet[] }) {
   return (
     <article className="max-w-2xl mx-auto bg-black text-white">
       <header className="p-4 border-b border-gray-800">
-        <div className="flex items-center space-x-3">
-          <Image
-            src={firstTweet.media[0]}
-            alt={firstTweet.author}
-            width={48}
-            height={48}
-            className="rounded-full"
-          />
-          <div>
-            <h1 className="font-bold text-xl">{firstTweet.author}</h1>
-            <p className="text-gray-500">@{firstTweet.author.toLowerCase().replace(/\s/g, '')}</p>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <Image
+              src={firstTweet.media[0]}
+              alt={firstTweet.author}
+              width={48}
+              height={48}
+              className="rounded-full"
+            />
+            <div>
+              <h2 className="font-bold text-xl">{firstTweet.author}</h2>
+              <p className="text-gray-500">@{firstTweet.author.toLowerCase().replace(/\s/g, '')}</p>
+            </div>
           </div>
+          <button
+            onClick={handleSaveThread}
+            className={`px-4 py-2 rounded-full ${
+              isSaved ? 'bg-gray-600 text-white' : 'bg-blue-500 text-white'
+            }`}
+          >
+            {isSaved ? 'Unsave Thread' : 'Save Thread'}
+          </button>
         </div>
       </header>
       <div className="p-4 space-y-4">
@@ -99,72 +142,45 @@ export function Thread({ tweets }: { tweets: Tweet[] }) {
             onMouseUp={(e) => handleTextSelection(e.nativeEvent, tweet.tweet_id)}
           >
             <p className="whitespace-pre-line">
-              {replaceLinks(tweet.text,tweet.links)}
-              {/* {tweet.media.map((mediaUrl, mediaIndex) => {
-                if ( mediaUrl.indexOf('emoji')!==-1  ) {
-                return (
-                    <img
-                      src={mediaUrl}
-                      key={`${tweetIndex}-${mediaIndex}`}
-                      alt={`Media ${mediaIndex + 1}`}
-                    
-                      className="w-4"
-                    />
-                )}
-              })
-              } */}
+              {replaceLinksWithTcoLinks(tweet.text, tweet.links)}
             </p>
             <div className="flex flex-wrap items-start">
-              {tweet.media.map((mediaUrl, mediaIndex) => {
+              { tweet.media.map((mediaUrl, mediaIndex) => {
                 let keycount=0
                 if (typeof mediaUrl !== 'string') {
                   console.error('Invalid media URL:', mediaUrl);
-                //   if(Array.isArray(mediaUrl)){
-                //   mediaUrl.map((index,vidlink)=>{ 
-                //     console.error(index)
-                //     if (vidlink.indexOf('.m3u8')!==-1) {
-                //       return (
-                //         <>
-                //         Video:
-                //         <div key={`${tweetIndex}-${mediaIndex}`} className={hasEmoji(mediaUrl) ? 'inline-block mr-2' : 'w-full mb-2'}>
-                //           <VideoPlayer
-                //             src={mediaUrl}
-                //             poster={typeof tweet.media[mediaIndex + 1] === 'string' ? tweet.media[mediaIndex + 1] : undefined}
-                //           />
-                //         </div>
-                //         </>
-                //       )
-                //     }
-                    
-                // })
-                //   }
-                
+                  return null;
                 }
 
-                // if (mediaUrl.indexOf('.m3u8')!==-1){
-                  
+                // if (mediaUrl.endsWith('.m3u8')) {
+                //   const videoSources = tweet.media.filter(url => 
+                //     typeof url === 'string' && (url.endsWith('.m3u8') || url.endsWith('.mp4'))
+                //   ) as string[]
+                //   const poster = tweet.media.find(url => 
+                //     typeof url === 'string' && url.includes('video_thumb')
+                //   )
                 //   return (
-                    
-                //     <div key={`${tweetIndex}-${mediaIndex}`} className={hasEmoji(mediaUrl) ? 'inline-block mr-2' : 'w-full mb-2'}>
-                //       {/* <VideoPlayer src={mediaUrl} /> */}
+                //     <div key={`${tweetIndex}-${mediaIndex}`} className="w-full mb-2">
+                //       <VideoPlayer
+                //         sources={videoSources}
+                //         poster={poster}
+                //       />
                 //     </div>
-                    
                 //   )
                 // }
-              
-                if ( mediaUrl.indexOf('media')!==-1) {
+                if (mediaUrl.indexOf('media')!==-1 && mediaUrl.indexOf('profile_images')==-1) {
                   keycount+=1
                   return (
-                    <div key={`${keycount}`}>
+                    <div key={`${keycount}`} >
                       <img
                         src={mediaUrl}
                         alt={`Media ${mediaIndex + 1}`}
-                        
                       />
                     </div>
-                  )}}
-                
-              )}
+                  )
+                }
+                return null
+              })}
             </div>
             {tweet.links && tweet.links.length > 0 && (
               <div className="space-y-2">
@@ -182,8 +198,19 @@ export function Thread({ tweets }: { tweets: Tweet[] }) {
               </div>
             )}
             {comments[tweet.tweet_id] && (
-              <div className="mt-2 p-2 bg-gray-800 rounded-md">
-                <p className="text-sm text-gray-300">Comment: {comments[tweet.tweet_id]}</p>
+              <div className="mt-2 p-2 bg-gray-800 rounded-md relative group">
+                <blockquote className="pl-2 border-l-4 border-gray-500 italic text-gray-400 mb-2">
+                  {comments[tweet.tweet_id].split('\n\nComment:')[0]}
+                </blockquote>
+                <p className="text-sm text-gray-300">
+                  {comments[tweet.tweet_id].split('\n\nComment:')[1]}
+                </p>
+                <button
+                  onClick={() => handleEditComment(tweet.tweet_id)}
+                  className="absolute top-2 right-2 p-1 bg-gray-700 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <Edit2 size={16} />
+                </button>
               </div>
             )}
           </div>
@@ -194,13 +221,21 @@ export function Thread({ tweets }: { tweets: Tweet[] }) {
       </footer>
       <CommentModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false)
+          setEditingCommentId(null)
+        }}
         onSave={(comment) => {
           if (currentTweetId) {
-            handleCommentChange(currentTweetId, `${selectedText}\n\nComment: ${comment}`)
+            const existingComment = comments[currentTweetId]
+            const newComment = editingCommentId
+              ? `${existingComment.split('\n\nComment:')[0]}\n\nComment: ${comment}`
+              : `${selectedText}\n\nComment: ${comment}`
+            handleCommentChange(currentTweetId, newComment)
           }
         }}
-        initialComment={currentTweetId ? comments[currentTweetId] || '' : ''}
+        initialComment={editingCommentId ? comments[editingCommentId]?.split('\n\nComment:')[1] || '' : ''}
+        isEditing={!!editingCommentId}
       />
     </article>
   )

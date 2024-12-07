@@ -1,17 +1,16 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Thread } from '@/components/thread'
 import { ThreadForm } from '@/components/thread-form'
-import { Metadata } from 'next'
 import { TweetButton } from '@/components/tweet-button'
-import { ErrorBoundary } from '@/components/error-boundary'
 import Link from 'next/link'
-
-interface Props {
-  searchParams: Promise<{ url?: string }>
-}
+import { Tweet } from '@/types/tweet'
 
 async function getData(url: string) {
   const apiUrl = `https://xapi.betaco.tech/x-thread-api?url=${encodeURIComponent(url)}`
-  const res = await fetch(apiUrl, { next: { revalidate: 3600 } }) // Cache for 1 hour
+  const res = await fetch(apiUrl)
   
   if (!res.ok) {
     throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`)
@@ -20,75 +19,78 @@ async function getData(url: string) {
   return res.json()
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const searchParams = await props.searchParams;
-  if (!searchParams.url) {
-    return {
-      title: 'Thread Viewer',
-      description: 'View X (Twitter) threads in a clean format'
+export default function Home() {
+  const searchParams = useSearchParams()
+  const url = searchParams.get('url')
+  const [tweets, setTweets] = useState<Tweet[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (url) {
+      setLoading(true)
+      setError(null)
+      getData(url)
+        .then((data) => {
+          setTweets(data)
+          setLoading(false)
+        })
+        .catch((err) => {
+          console.error('Error fetching thread data:', err)
+          setError('An error occurred while fetching the thread data. Please try again later.')
+          setLoading(false)
+        })
     }
-  }
+  }, [url])
 
-  try {
-    const data = await getData(searchParams.url)
-    const firstTweet = data[0]
-    const title = `${firstTweet.author}: ${firstTweet.text.slice(0, 50)}...`
-
-    return {
-      title,
-      description: firstTweet.text.slice(0, 160),
-      openGraph: {
-        title,
-        description: firstTweet.text.slice(0, 160),
-        images: [firstTweet.media[1] || firstTweet.media[0]],
-      },
-    }
-  } catch (error) {
-    console.error('Error generating metadata:', error)
-    return {
-      title: 'Thread Viewer - Error',
-      description: 'An error occurred while fetching the thread data.',
-    }
-  }
-}
-
-export default async function Page(props: Props) {
-  const searchParams = await props.searchParams;
-  if (!searchParams.url) {
-    return <ThreadForm />
-  }
-
-  try {
-    const data = await getData(searchParams.url)
-    const pageTitle = `${data[0].author}: ${data[0].text.slice(0, 50)}...`
-
+  if (!url) {
     return (
-      <div className="min-h-screen bg-black">
+      <div className="min-h-screen bg-black text-white">
         <main className="container mx-auto px-4 py-8">
-          <ErrorBoundary fallback={<ErrorMessage />}>
-            <h1 className="text-2xl font-bold mb-4 text-white">{pageTitle}</h1>
-            <Thread tweets={data} />
-            <div className="mt-8">
-              <TweetButton url={searchParams.url} title={pageTitle} />
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-3xl font-bold">Thread Viewer</h1>
+            <div className="space-x-4">
+              <Link href="/my-comments" className="text-blue-400 hover:underline">
+                My Comments
+              </Link>
+              <Link href="/saved-threads" className="text-blue-400 hover:underline">
+                Saved Threads
+              </Link>
             </div>
-          </ErrorBoundary>
+          </div>
+          <ThreadForm />
         </main>
       </div>
     )
-  } catch (error) {
-    console.error('Error fetching thread data:', error)
-    return <ErrorMessage />
   }
-}
 
-function ErrorMessage() {
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold mb-4">Error</h1>
-        <p>An error occurred while fetching the thread data. Please try again later.</p>
-        <Link href="/" className="text-blue-400 hover:underline mt-4 inline-block">Go back to home</Link>
-      </div>
+    <div className="min-h-screen bg-black">
+      <main className="container mx-auto px-4 py-8">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-white">Thread Viewer</h1>
+          <div className="space-x-4">
+            <Link href="/my-comments" className="text-blue-400 hover:underline">
+              My Comments
+            </Link>
+            <Link href="/saved-threads" className="text-blue-400 hover:underline">
+              Saved Threads
+            </Link>
+          </div>
+        </div>
+        {loading ? (
+          <div className="text-white text-center">Loading thread data...</div>
+        ) : error ? (
+          <div className="text-red-500 text-center">{error}</div>
+        ) : tweets.length > 0 ? (
+          <>
+            <Thread tweets={tweets} url={url} />
+            <div className="mt-8">
+              <TweetButton url={url} title={`${tweets[0].author}: ${tweets[0].text.slice(0, 50)}...`} />
+            </div>
+          </>
+        ) : null}
+      </main>
     </div>
   )
 }

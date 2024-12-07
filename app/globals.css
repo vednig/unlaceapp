@@ -2,3 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom Video Player Styles */
+.video-container {
+  position: relative;
+  width: 100%;
+  background-color: #000;
+  overflow: hidden;
+}
+
+.video-js {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+.video-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  padding: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.video-container:hover .video-controls {
+  opacity: 1;
+}
+
+.video-progress {
+  width: 100%;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.video-progress-bar {
+  height: 100%;
+  background-color: #1D9BF0;
+}
+
+.video-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.video-button {
+  background: none;
+  border: none;
+  color: #fff;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.video-time {
+  color: #fff;
+  font-size: 14px;
+  margin-right: 16px;
+}
+
+.video-js .vjs-big-play-button {
+  background: rgba(29, 155, 240, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  margin-left: -30px;
+  margin-top: -30px;
+}
+
+.video-js:hover .vjs-big-play-button {
+  background: rgba(29, 155, 240, 0.9);
+}
+
+.video-js .vjs-big-play-button .vjs-icon-placeholder:before {
+  font-size: 40px;
+  line-height: 60px;
+}
+

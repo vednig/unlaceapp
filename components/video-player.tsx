@@ -106,3 +106,4 @@ export function VideoPlayer({ sources, poster }: VideoPlayerProps) {
     </div>
   )
 }
+

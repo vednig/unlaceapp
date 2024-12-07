@@ -37,7 +37,7 @@ export default function Home() {
         })
         .catch((err) => {
           console.error('Error fetching thread data:', err)
-          setError('An error occurred while fetching the thread data. Please refresh the page in a while.')
+          setError('An error occurred while fetching the thread data. Please refresh the page in a while.<a href="#">Refresh</a>')
           setLoading(false)
         })
     }

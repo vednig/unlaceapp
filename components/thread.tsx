@@ -23,7 +23,7 @@ function replaceLinksWithTcoLinks(text: string, links: string[]): JSX.Element[] 
       linkcount+=1
         return (
           <a
-            key={index}
+            key={part.split('/')[-1]}
             href={links[linkIndex]}
             target="_blank"
             rel="noopener noreferrer"
@@ -191,7 +191,7 @@ export function Thread({ tweets, url }: ThreadProps) {
               <div className="space-y-2">
                 {tweet.links.map((link, index) => (
                   <a
-                    key={index}
+                    key={tweet.tweet_id+index}
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"

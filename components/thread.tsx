@@ -23,7 +23,7 @@ function replaceLinksWithTcoLinks(text: string, links: string[]): JSX.Element[] 
       linkcount+=1
         return (
           <a
-            key={linkcount}
+            key={index}
             href={links[linkIndex]}
             target="_blank"
             rel="noopener noreferrer"

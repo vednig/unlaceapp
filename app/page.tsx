@@ -46,6 +46,7 @@ export default function Home() {
   if (!url) {
     return (
       <div className="min-h-screen bg-black text-white">
+        <Suspense>
         <main className="container mx-auto px-4 py-8">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-bold">Thread Viewer</h1>
@@ -60,6 +61,7 @@ export default function Home() {
           </div>
           <ThreadForm />
         </main>
+        </Suspense>
       </div>
     )
   }

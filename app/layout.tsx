@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Analytics } from "@vercel/analytics/react"
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Thread Viewer',
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-black text-white">
+        <Suspense>
         {children}
+        </Suspense>
       </body>
       <Analytics/>
 

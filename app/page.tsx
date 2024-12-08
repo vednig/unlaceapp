@@ -77,7 +77,7 @@ export default function Home() {
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
         <Link href="/">
-          <h1 className="text-3xl font-bold text-white">Thread Viewer <sub>by Unlace</sub></h1>
+          <h1 className="text-3xl font-bold text-white">Thread Viewer</h1>
           </Link>
           <div className="space-x-4">
             <Link href="/my-comments" className="text-blue-400 hover:underline">

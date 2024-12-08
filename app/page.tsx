@@ -52,7 +52,9 @@ export default function Home() {
           <div className="flex justify-between items-center mb-8">
             <Link href="/">
             <h1 className="text-3xl font-bold">Thread Viewer</h1></Link>
+            <Link href="https://www.producthunt.com/posts/unlace-thread-viewer?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-unlace&#0045;thread&#0045;viewer" >
             <Image alt='Unlace&#0032;Thread&#0032;Viewer - Turn&#0032;X&#0032;threads&#0032;into&#0032;articles | Product Hunt' className='h-[54px] w-[250px]' src="https://imagecdn.app/v1/images/https%3A%2F%2Fapi.producthunt.com%2Fwidgets%2Fembed-image%2Fv1%2Ffeatured.svg%3Fpost_id%3D684291%26theme%3Ddark?width=300" />
+            </Link>
             <div className="space-x-4">
               <Link href="/my-comments" className="text-blue-400 hover:underline">
                 My Comments
@@ -74,7 +76,9 @@ export default function Home() {
       <Suspense>
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
+        <Link href="/">
           <h1 className="text-3xl font-bold text-white">Thread Viewer</h1>
+          </Link>
           <div className="space-x-4">
             <Link href="/my-comments" className="text-blue-400 hover:underline">
               My Comments

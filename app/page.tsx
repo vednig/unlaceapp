@@ -6,6 +6,7 @@ import { Thread } from '@/components/thread'
 import { ThreadForm } from '@/components/thread-form'
 import { TweetButton } from '@/components/tweet-button'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Tweet } from '@/types/tweet'
 
 async function getData(url: string) {
@@ -51,6 +52,7 @@ export default function Home() {
           <div className="flex justify-between items-center mb-8">
             <Link href="/">
             <h1 className="text-3xl font-bold">Thread Viewer</h1></Link>
+            <Image alt='Unlace&#0032;Thread&#0032;Viewer - Turn&#0032;X&#0032;threads&#0032;into&#0032;articles | Product Hunt' className='h-[54px] w-[250px]' src="https://imagecdn.app/v1/images/https%3A%2F%2Fapi.producthunt.com%2Fwidgets%2Fembed-image%2Fv1%2Ffeatured.svg%3Fpost_id%3D684291%26theme%3Ddark?width=300" />
             <div className="space-x-4">
               <Link href="/my-comments" className="text-blue-400 hover:underline">
                 My Comments

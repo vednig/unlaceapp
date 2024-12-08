@@ -2,6 +2,7 @@ import { Thread } from '@/components/thread'
 import { Metadata } from 'next'
 import { TweetButton } from '@/components/tweet-button'
 import { ErrorBoundary } from '@/components/error-boundary'
+import Link from 'next/link'
 
 interface Props {
   searchParams: { url?: string }
@@ -82,7 +83,7 @@ function ErrorMessage() {
       <div className="text-center">
         <h1 className="text-2xl font-bold mb-4">Error</h1>
         <p>An error occurred while fetching the thread data. Please refresh the page in a while.</p>
-        <a href="/" className="text-blue-400 hover:underline mt-4 inline-block">Go back to home</a>
+        <Link href="/" className="text-blue-400 hover:underline mt-4 inline-block">Go back to home</Link>
       </div>
     </div>
   )

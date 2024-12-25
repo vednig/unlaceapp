@@ -21,7 +21,11 @@ export default function RootLayout({
         </Suspense>
       </body>
       <Analytics/>
-
+      <script 
+ defer 
+ data-site-id="unlace.app" 
+ src="https://assets.onedollarstats.com/tracker.js"> 
+</script>
     </html>
   )
 }

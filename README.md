@@ -1,7 +1,8 @@
+<!-- 
+![Screenshot 2024-12-08 003443](https://github.com/user-attachments/assets/2bab4e12-a479-4ee5-a911-0316ace5af61)]
+This is a single-line comment -->
 
-![Screenshot 2024-12-08 003443](https://github.com/user-attachments/assets/2bab4e12-a479-4ee5-a911-0316ace5af61)
-
-# Unlace Threads to Articles, Focus on the Content
+# Unlace Threads to Focus on the Content
 
 Unlace is a powerful tool that transforms Twitter threads into beautifully formatted, reader-friendly articles in just one click. Say goodbye to cluttered threads and hello to seamless content consumption.
 

@@ -26,6 +26,8 @@ export default function RootLayout({
  data-site-id="unlace.app" 
  src="https://assets.onedollarstats.com/tracker.js"> 
 </script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9266977335148174"
+     crossOrigin="anonymous"></script>
     </html>
   )
 }

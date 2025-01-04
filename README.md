@@ -1,24 +1,25 @@
-# Thread Viewer
-![Screenshot 2024-12-08 003443](https://github.com/user-attachments/assets/2bab4e12-a479-4ee5-a911-0316ace5af61)
+<!-- 
+![Screenshot 2024-12-08 003443](https://github.com/user-attachments/assets/2bab4e12-a479-4ee5-a911-0316ace5af61)]
+This is a single-line comment -->
 
-### Unlace: Threads to Articles, Focus on the Content
+# Unlace Threads to Focus on the Content
 
 Unlace is a powerful tool that transforms Twitter threads into beautifully formatted, reader-friendly articles in just one click. Say goodbye to cluttered threads and hello to seamless content consumption.
 
 **Features**
 
-- One-Click Conversion: Instantly turn Twitter threads into organized articles.
+- [x] One-Click Conversion
 
-- Focus on Content: Highlight the essence of the thread while stripping away distractions.
+- [x] Focus on Content
 
-- Clean and Minimal Design: Deliver a reading experience free of visual noise.
+- [x] Clean and Minimal Design
 
-- Export Options: Save or share articles in formats like PDF or Markdown.
+- [ ] Export Options
 
-- Device-Friendly: Responsive design ensures compatibility across devices.
+- [x] Device-Friendly
 
 
-**Getting Started**
+## **Getting Started**
 
 Follow these simple steps to start using Unlace:
 
@@ -28,17 +29,17 @@ Unlace is a web-based tool; no installation is required. Visit unlace.app to get
 
 2. Using Unlace
 
- - Copy the link to a Twitter thread.
+ - `Copy the link` to a Twitter thread.
 
- - Paste it into the Unlace input field.
+ - `Paste it into Unlace` input field.
 
- - Click the "Unlace Now" button.
+ - `Click the Unlace Now` button.
 
 Enjoy your formatted article!
 
-**Why Choose Unlace?**
+## **Why Choose Unlace?**
 
-Unlace is perfect for:
+Unlace is perfect(and ad-free) for:
 
 - Content creators who want a quick way to reformat threads into blog posts.
 
@@ -46,7 +47,7 @@ Unlace is perfect for:
 
 - Professionals curating insights from Twitter without the noise.
 
-**Future Enhancements**
+## **Future Enhancements**
 
 We are actively improving Unlace. Here's what's coming soon:
 
@@ -56,7 +57,7 @@ We are actively improving Unlace. Here's what's coming soon:
 
  - Mobile App: Access Unlace on the go.
 
-**Contributing**
+## **Contributing**
 
 We welcome contributions! If you'd like to help improve Unlace, please:
 
@@ -66,9 +67,9 @@ We welcome contributions! If you'd like to help improve Unlace, please:
 
  3. Suggest features via the Issues tab
 
-For more details, visit our Contributing Guidelines.
 
-**Support**
+
+## **Support**
 
 Need help? Reach out to us:
 

@@ -1,6 +1,10 @@
 <!-- 
 ![Screenshot 2024-12-08 003443](https://github.com/user-attachments/assets/2bab4e12-a479-4ee5-a911-0316ace5af61)]
 This is a single-line comment -->
+> [!TIP]
+> Because of high cost of usage for X API. Unlace uses [open source unofficial X API](https://github.com/vednig/x-api)
+
+
 
 # Unlace Threads to Focus on the Content
 
@@ -78,6 +82,7 @@ Twitter(X): [@UnlaceApp](https://x.com/unlaceapp)
 **License**
 
 Unlace is licensed under the [MIT License](#license).
+
 
 <hr/>
 <sub>

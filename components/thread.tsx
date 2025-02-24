@@ -128,7 +128,7 @@ export function Thread({ tweets, url }: ThreadProps) {
           <div className="flex items-center space-x-3">
             <a 
             target='no_follow'
-            href={"https://x.com/"+firstTweet.author.toLowerCase().replace(/\s/g, '')}
+            href={"https://x.com/"+url.split('/')[3]}
             >
             <Image
               src={firstTweet.media[0]}
@@ -139,7 +139,7 @@ export function Thread({ tweets, url }: ThreadProps) {
             />
             <div>
               <h2 className="font-bold text-xl">{firstTweet.author}</h2>
-              <p className="text-gray-500">@{firstTweet.author.toLowerCase().replace(/\s/g, '')}</p>
+              <p className="text-gray-500">@{url.split('/')[3]}</p>
             </div>
             </a>
           </div>
@@ -263,6 +263,7 @@ export function Thread({ tweets, url }: ThreadProps) {
         }}
         initialComment={editingCommentId ? comments[editingCommentId]?.split('\n\nComment:')[1] || '' : ''}
         isEditing={!!editingCommentId}
+        selection={' '+selectedText}
       />
     </article>
   )

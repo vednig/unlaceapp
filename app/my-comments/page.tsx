@@ -68,6 +68,8 @@ export default function MyComments() {
                   {quotedText}
                 </blockquote>
                 <p className="mt-2 text-gray-300">{commentText}</p>
+                {comment.url}
+                </Link>
                 <button
                   onClick={() => handleDeleteComment(comment.url, comment.tweetId)}
                   className="absolute top-2 right-2 p-1 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
@@ -75,8 +77,7 @@ export default function MyComments() {
                 >
                   <Trash2 size={16} />
                 </button>
-                {comment.url}
-                </Link>
+                
               </li>
             )
           })}

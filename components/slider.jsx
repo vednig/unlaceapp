@@ -34,11 +34,10 @@ const EmblaCarousel = (props) => {
     <section className="embla" dir="rtl">
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container w-full">
-          {slides.map((index) => (
+          {slides.map((slide,index) => (
             <div className="embla__slide text-left" key={index}>
-              <div className="font-bold text-sm px-4">Ian Crosby</div>
-              <div className="text-lg font-extralight text-left">              Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus minus quasi laborum animi inventore consectetur, sunt voluptatem eaque quis dolore, molestias doloremque quaerat cumque harum asperiores, suscipit atque? Placeat, voluptas?
-              </div>
+              <div className="font-bold text-sm px-4">{slide.author}</div>
+              <div className="text-lg font-extralight text-left">{slide.text}</div>
             </div>
           ))}
         </div>

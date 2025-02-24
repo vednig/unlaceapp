@@ -8,8 +8,29 @@ import React from 'react'
 import EmblaCarousel from './slider'
 
 const OPTIONS = { direction: 'rtl', loop: true }
-const SLIDE_COUNT = 10
-const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
+// const SLIDE_COUNT = 10
+const SLIDES = [
+  {text:'Animated bento style feature cards for an AI brand  \n\u27a4 Built with  by \n@beewstudio',
+    author:'\u00c7a\u011fatayhan'},
+    {text:`Search engine crawlers still outpace AI crawlers, but it's growing significantly.\n\nLast month GPTBot, Claude, AppleBot, and PerplexityBot combined account for nearly 1.3 billion fetches\u2014a little over 28% of Googlebot's volume`,
+      author:'Vercel'
+    },
+    {text:`On this day in 1910, the Fed was born.\n\nElite politicians and bankers secretly met at this club on Jekyll Island, in Georgia, to create a financial system that would enrich them and their buddies and enable them to consolidate political power.\n\nTheir plan soon after became the Federal Reserve. Here's how secret it was:`,
+      author:'Connor Boyack'
+    },{text:'Are simplicial homology calculations supposed to be this tedious? I feel like I\'m missing something. \n\nI\'m trying to calculate the simplicial homology of a simplicial complex, but it seems like I have to manually calculate the boundary maps for each dimension. Is there a better way to do this?',
+      author:'alcuin'
+    },{text:`Now that it's been out for 10 days... What are your biggest COMPLAINTS about Marvel Rivals?`,
+      author:'Marvel Rivals Guides'
+    },{text:`Live reporting at City's last scheduled mtg of year, where tough cuts will be weighed by Council, ahead of ministerial approval of election results and filling Mayoral vacancy + future D2 vacancy. Plus emergency declaration necessary for sales tax ballot measure in April.Over a hundred residents are here urging council to avoid cutting senior center funding. Another protest against the Citys increasing homeless sweeps is starting a few feet away`,
+      author:'The Oakland Observer'
+    },{text:'What is that one framework you can use to build a fullstack project?',
+      author:'Juliet Albert'
+    },{text:'This \n@openai\n researcher got hacked. The classic \"a coin just dropped\" thing with comments turned off and a fake website. An analysis on how the attack works and its tech stack ',
+      author:'Guillermo Rauch'
+    },{text:'I may have uncovered a MASSIVE scandal in CA.  \n\nGavin Newsom claims $24B for homelessness went \"missing\".\n\nWell, I found evidence of CA officials possibly, allegedly, embezzling hundreds of millions, if not billions of dollars through a sketchy Cayman Islands group! \n\n1/',
+      author:'James Li'
+    },
+]
 
 export function ThreadForm() {
   const [url, setUrl] = useState('')

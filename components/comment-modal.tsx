@@ -6,9 +6,10 @@ interface CommentModalProps {
   onSave: (comment: string) => void
   initialComment: string
   isEditing?: boolean
+  selection?: string
 }
 
-export function CommentModal({ isOpen, onClose, onSave, initialComment, isEditing }: CommentModalProps) {
+export function CommentModal({ isOpen, onClose, onSave, initialComment, isEditing,selection }: CommentModalProps) {
   const [comment, setComment] = useState(initialComment)
 
   useEffect(() => {
@@ -20,8 +21,8 @@ export function CommentModal({ isOpen, onClose, onSave, initialComment, isEditin
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-gray-800 p-6 rounded-lg w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4 text-white">{isEditing ? 'Edit Comment' : 'Add Comment'}</h2>
-        <h4 className="text-sm text-gray-400 mb-4">Context:{window.getSelection()?.toString()}</h4>
+        <h2 className="text-xl font-bold mb-4 text-white">{isEditing ? 'Edit Note' : 'Add Note'}</h2>
+        <h4 className="text-sm text-gray-400 mb-4"><span className='font-bold text-white'>Context:</span>{selection?.toString()}</h4>
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}

@@ -6,7 +6,7 @@ import { Thread } from '@/components/thread'
 import { ThreadForm } from '@/components/thread-form'
 import { TweetButton } from '@/components/tweet-button'
 import Link from 'next/link'
-import Image from 'next/image'
+
 import { Tweet } from '@/types/tweet'
 
 async function getData(url: string) {
@@ -52,14 +52,12 @@ export default function Home() {
           <div className="flex justify-between items-center mb-8">
             <Link href="/">
             <h1 className="text-3xl font-bold">Thread Viewer</h1></Link>
-            <Link href="https://www.producthunt.com/posts/unlace-thread-viewer?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-unlace&#0045;thread&#0045;viewer" >
-            <Image width={250} height={54} alt='Unlace&#0032;Thread&#0032;Viewer - Turn&#0032;X&#0032;threads&#0032;into&#0032;articles | Product Hunt' className='h-[54px] w-[250px]' src="https://imagecdn.app/v1/images/https%3A%2F%2Fapi.producthunt.com%2Fwidgets%2Fembed-image%2Fv1%2Ffeatured.svg%3Fpost_id%3D684291%26theme%3Ddark?width=300" />
-            </Link>
-            <div className="space-x-4">
-              <Link href="/my-comments" className="text-blue-400 hover:underline">
+
+            <div className="flex flex-col md:flex-row">
+              <Link href="/my-comments" className="text-blue-400 hover:underline px-4 py-4">
                 My Comments
               </Link>
-              <Link href="/saved-threads" className="text-blue-400 hover:underline">
+              <Link href="/saved-threads" className="text-blue-400 hover:underline px-4 py-4">
                 Saved Threads
               </Link>
             </div>
@@ -74,10 +72,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black">
       <Suspense>
-      <main className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
+      <main className="container mx-auto  py-8 md:px-4">
+        <div className="flex justify-between items-center mb-8 fixed top-0 right-0 w-full backdrop-blur-lg bg-transparent px-4 py-4">
         <Link href="/">
-          <h1 className="text-3xl font-bold text-white">Thread Viewer</h1>
+          <h1 className="text-3xl font-bold text-white">📖Unlaced Thread Reader</h1>
           </Link>
           <div className="space-x-4">
             <Link href="/my-comments" className="text-blue-400 hover:underline">
@@ -88,6 +86,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
+        
         {loading ? (
           <div className="text-white text-center">Loading thread data...<br/><span className='text-gray-400 animate-pulse'> Might take some time</span>{
            
@@ -95,12 +94,12 @@ export default function Home() {
         ) : error ? (
           <div className="text-red-500 text-center">{error}</div>
         ) : tweets.length > 0 ? (
-          <>
+          <div className='mt-6'>
             <Thread tweets={tweets} url={url} />
-            <div className="mt-8">
+            <div className="mt-8 items-center justify-center flex">
               <TweetButton url={url} title={`${tweets[0].author}: ${tweets[0].text.slice(0, 50)}...`} />
             </div>
-          </>
+          </div>
         ) : null}
       </main>
       </Suspense>

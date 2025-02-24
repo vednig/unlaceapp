@@ -1,4 +1,8 @@
 import './globals.css'
+import './css/base.css'
+import './css/sandbox.css'
+import './css/emble.css'
+
 import type { Metadata } from 'next'
 import { Analytics } from "@vercel/analytics/react"
 import { Suspense } from 'react'
@@ -21,13 +25,13 @@ export default function RootLayout({
         </Suspense>
       </body>
       <Analytics/>
-      <script 
+      {/* <script 
  defer 
  data-site-id="unlace.app" 
  src="https://assets.onedollarstats.com/tracker.js"> 
 </script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9266977335148174"
-     crossOrigin="anonymous"></script>
+     crossOrigin="anonymous"></script> */}
     </html>
   )
 }

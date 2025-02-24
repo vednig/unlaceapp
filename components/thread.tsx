@@ -5,12 +5,15 @@ import Image from 'next/image'
 // import { VideoPlayer } from './video-player'
 import { Tweet } from '@/types/tweet'
 import { CommentModal } from './comment-modal'
-import { Edit2 } from 'lucide-react'
+import { Edit2, Trash2 } from 'lucide-react'
 import 'video.js/dist/video-js.css'
 
 // function hasEmojiInPath(str: string): boolean {
 //   return str.toLowerCase().includes('emoji')
 // }
+
+
+
 
 function replaceLinksWithTcoLinks(text: string, links: string[]): JSX.Element[] {
   const urlRegex = /(https?:\/\/[^\s]+)/g
@@ -49,7 +52,18 @@ export function Thread({ tweets, url }: ThreadProps) {
   const [currentTweetId, setCurrentTweetId] = useState<string | null>(null)
   const [isSaved, setIsSaved] = useState(false)
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null)
-
+  
+  const handleDeleteComment = (url: string, tweetId: string) => {
+    const storedComments = JSON.parse(localStorage.getItem('threadComments') || '{}')
+    if (storedComments[url]) {
+      delete storedComments[url][tweetId]
+      if (Object.keys(storedComments[url]).length === 0) {
+        delete storedComments[url]
+      }
+      localStorage.setItem('threadComments', JSON.stringify(storedComments))
+      console.log(storedComments)
+    }
+  }
   useEffect(() => {
     const storedComments = localStorage.getItem('threadComments')
     if (storedComments) {
@@ -72,7 +86,7 @@ export function Thread({ tweets, url }: ThreadProps) {
   }
 
   const handleTextSelection = (event: MouseEvent, tweetId: string) => {
-    if (comments[tweetId]) return // Prevent commenting on tweets with existing comments
+    // if (comments[tweetId]) return // Prevent commenting on tweets with existing comments
 
     const selection = window.getSelection()
     if (selection && selection.toString().trim().length > 0) {
@@ -215,6 +229,14 @@ export function Thread({ tweets, url }: ThreadProps) {
                   className="absolute top-2 right-2 p-1 bg-gray-700 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                 >
                   <Edit2 size={16} />
+
+                </button>
+                <button
+                  onClick={() => handleDeleteComment(url, tweet.tweet_id)}
+                  className="absolute top-10 right-2 p-1 mt-2 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  aria-label="Delete comment"
+                >
+                  <Trash2 size={16} />
                 </button>
               </div>
             )}

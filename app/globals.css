@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 /* Custom Video Player Styles */
 .video-container {
   position: relative;

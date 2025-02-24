@@ -34,6 +34,7 @@ export default function MyComments() {
       })
       
       setComments(commentArray)
+      console.log(commentArray)
     }
   }
 
@@ -53,16 +54,16 @@ export default function MyComments() {
     <div className="container mx-auto px-4 py-8 bg-black text-white min-h-screen">
       <h1 className="text-2xl font-bold mb-4">My Comments</h1>
       {comments.length === 0 ? (
-        <p>You haven't made any comments yet.</p>
+        <p>You haven&apos;t made any comments yet.</p>
       ) : (
         <ul className="space-y-4">
           {comments.map((comment, index) => {
+            if(typeof comment.text !== "string") return null
             const [quotedText, commentText] = comment.text.split('\n\nComment:')
             return (
               <li key={index} className="bg-gray-800 p-4 rounded-lg relative group">
                 <Link href={`/?url=${encodeURIComponent(comment.url)}`} className="text-blue-400 hover:underline">
-                  {comment.url}
-                </Link>
+                  
                 <blockquote className="pl-2 border-l-4 border-gray-500 italic text-gray-400 my-2">
                   {quotedText}
                 </blockquote>
@@ -74,6 +75,8 @@ export default function MyComments() {
                 >
                   <Trash2 size={16} />
                 </button>
+                {comment.url}
+                </Link>
               </li>
             )
           })}

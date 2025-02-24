@@ -12,24 +12,34 @@ const OPTIONS = { direction: 'rtl', loop: true }
 // const SLIDE_COUNT = 10
 const SLIDES = [
   {text:'Animated bento style feature cards for an AI brand  \n\u27a4 Built with  by \n@beewstudio',
-    author:'\u00c7a\u011fatayhan'},
+    author:'\u00c7a\u011fatayhan',
+    link:'/?url=https://x.com/kurtcagatayhan/status/1871186800536076629'
+  },
     {text:`Search engine crawlers still outpace AI crawlers, but it's growing significantly.\n\nLast month GPTBot, Claude, AppleBot, and PerplexityBot combined account for nearly 1.3 billion fetches\u2014a little over 28% of Googlebot's volume`,
-      author:'Vercel'
+      author:'Vercel',
+      link:'/?url=https://x.com/vercel/status/1869083642938712368'
     },
     {text:`On this day in 1910, the Fed was born.\n\nElite politicians and bankers secretly met at this club on Jekyll Island, in Georgia, to create a financial system that would enrich them and their buddies and enable them to consolidate political power.\n\nTheir plan soon after became the Federal Reserve. Here's how secret it was:`,
-      author:'Connor Boyack'
+      author:'Connor Boyack',
+      link:'/?url=https://x.com/cboyack/status/1860679771962868073'
     },{text:'Are simplicial homology calculations supposed to be this tedious? I feel like I\'m missing something. \n\nI\'m trying to calculate the simplicial homology of a simplicial complex, but it seems like I have to manually calculate the boundary maps for each dimension. Is there a better way to do this?',
-      author:'alcuin'
+      author:'alcuin',
+      link:'/?url=https://x.com/scheminglunatic/status/1868812917325598734?s=46'
     },{text:`Now that it's been out for 10 days... What are your biggest COMPLAINTS about Marvel Rivals?`,
-      author:'Marvel Rivals Guides'
+      author:'Marvel Rivals Guides',
+      link:'/?url=https://x.com/TheGuidesGuy/status/1868353963730571662?t=3RYoRvQDS39mNwmEh4gP1w&s=19'
     },{text:`Live reporting at City's last scheduled mtg of year, where tough cuts will be weighed by Council, ahead of ministerial approval of election results and filling Mayoral vacancy + future D2 vacancy. Plus emergency declaration necessary for sales tax ballot measure in April.Over a hundred residents are here urging council to avoid cutting senior center funding. Another protest against the Citys increasing homeless sweeps is starting a few feet away`,
-      author:'The Oakland Observer'
+      author:'The Oakland Observer',
+      link:'/?url=https://x.com/Oak_Observer/status/1869163845018882102'
     },{text:'What is that one framework you can use to build a fullstack project?',
-      author:'Juliet Albert'
+      author:'Juliet Albert',
+      link:'/?url=https://x.com/MaverickAlbert5/status/1870557818056827110'
     },{text:'This \n@openai\n researcher got hacked. The classic \"a coin just dropped\" thing with comments turned off and a fake website. An analysis on how the attack works and its tech stack ',
-      author:'Guillermo Rauch'
+      author:'Guillermo Rauch',
+      link:'/?url=https://x.com/rauchg/status/1838005061332673008'
     },{text:'I may have uncovered a MASSIVE scandal in CA.  \n\nGavin Newsom claims $24B for homelessness went \"missing\".\n\nWell, I found evidence of CA officials possibly, allegedly, embezzling hundreds of millions, if not billions of dollars through a sketchy Cayman Islands group! \n\n1/',
-      author:'James Li'
+      author:'James Li',
+      link:'/?url=https://x.com/5149jamesli/status/1869935387038355822'
     },
 ]
 

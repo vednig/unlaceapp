@@ -6,6 +6,7 @@ import {
 } from './slider-nav'
 import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel from 'embla-carousel-react'
+import Link from 'next/link'
 
 const EmblaCarousel = (props) => {
   const { slides, options } = props
@@ -36,8 +37,12 @@ const EmblaCarousel = (props) => {
         <div className="embla__container w-full">
           {slides.map((slide,index) => (
             <div className="embla__slide text-left" key={index}>
+                            <Link href={slide.link} key={index}>
+
               <div className="font-bold text-sm px-4">{slide.author}</div>
               <div className="text-lg font-extralight text-left">{slide.text}</div>
+              </Link>
+            
             </div>
           ))}
         </div>

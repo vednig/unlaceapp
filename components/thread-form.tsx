@@ -6,6 +6,7 @@ import Image from 'next/image'
 import loading from '../public/machine.png'
 import React from 'react'
 import EmblaCarousel from './slider'
+import Link from 'next/link'
 
 const OPTIONS = { direction: 'rtl', loop: true }
 // const SLIDE_COUNT = 10
@@ -112,6 +113,7 @@ export function ThreadForm() {
           >
             {isProcessing ? (<div className='flex animate-pulse'><Image alt='' className='w-6 mx-4 h-6 animate-bounce' height={64} width={64} src={loading}/>Unlacing this one for you ...</div>):'Unlace 🧵'}
           </button>
+          <Link href="https://buy.polar.sh/polar_cl_Z8c0r7FJYSfd6uJUapaX7a7fGoM6zIIp3DZPc1avQTu" className="text-red-800 hover:underline mt-4 inline-block justify-center text-center w-full">Get more new features daily</Link>
         </form>
       </div>
     </div>

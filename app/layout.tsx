@@ -19,13 +19,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/* <div dangerouslySetInnerHTML={{__html:`<script 
+<script 
  defer 
  data-site-id="unlace.app" 
  src="https://assets.onedollarstats.com/tracker.js"> 
 </script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9266977335148174"
-     crossOrigin="anonymous"></script>`}}></div> */}
+     crossOrigin="anonymous"></script>
       <body className="bg-black text-white">
         <Suspense>
         {children}
